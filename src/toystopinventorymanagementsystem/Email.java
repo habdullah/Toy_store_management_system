@@ -5,7 +5,7 @@ package toystopinventorymanagementsystem;
  *
  * @author Fahad Satti
  */
-class Email {
+class Email implements java.io.Serializable {
     private String emailAddress;
 
     public String getEmailAddress() {

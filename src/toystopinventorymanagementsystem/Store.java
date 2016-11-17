@@ -8,7 +8,7 @@ import java.util.Random;
  *
  * @author Fahad Satti
  */
-public class Store {
+public class Store implements java.io.Serializable{
     public int UID;
     public String address;
     public String contactNo;

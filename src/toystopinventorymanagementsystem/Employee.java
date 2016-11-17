@@ -5,7 +5,7 @@ package toystopinventorymanagementsystem;
  *
  * @author Fahad Satti
  */
-public class Employee {
+public class Employee implements java.io.Serializable{
     private String name;
     private int UID;
     private Email email;

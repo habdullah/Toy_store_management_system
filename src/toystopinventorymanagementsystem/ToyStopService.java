@@ -9,7 +9,7 @@ import java.util.Random;
  *
  * @author Fahad Satti
  */
-public class ToyStopService {
+public class ToyStopService implements java.io.Serializable{
     ArrayList<Employee> employees = new ArrayList<>();
     ArrayList<Store> stores = new ArrayList<>();
         

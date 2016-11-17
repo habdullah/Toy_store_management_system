@@ -6,12 +6,12 @@ import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
 import javax.swing.JOptionPane;
-
+import java.io.*;
 /**
  *
  * @author Fahad Satti
  */
-public class ToyStopInventoryManagementSystem {
+public class ToyStopInventoryManagementSystem implements java.io.Serializable{
     ToyStopService tsService = new ToyStopService();
     public void init(){
         
@@ -26,8 +26,7 @@ public class ToyStopInventoryManagementSystem {
     public static void main(String[] args) {
         
         
-        ToyStopInventoryManagementSystem tsims = new ToyStopInventoryManagementSystem();
-        System.out.println("Welcome to Toy Stop Inventory Management System");
+        ToyStopInventoryManagementSystem tsims = new ToyStopInventoryManagementSystem() ;
         System.out.println("Enter 1 to start fresh. Enter 2 to load old state");
         
         Scanner reader = new Scanner(System.in);
@@ -39,7 +38,7 @@ public class ToyStopInventoryManagementSystem {
             tsims.init();
             break;
          case 2 :
-             //tsims.loadData();
+            tsims.loadData();
             System.out.println("old data loaded");
             break;
          default :
@@ -90,7 +89,7 @@ public class ToyStopInventoryManagementSystem {
             //tsims.runsim();
            break; 
            case 0 :
-             //tsims.saveData();
+             tsims.saveData();
            break; 
            
          default :
@@ -98,12 +97,38 @@ public class ToyStopInventoryManagementSystem {
         }
         
     }
-    private void savaData() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    private void saveData() {
+       // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+       
+       try {
+         FileOutputStream fileOut = new FileOutputStream("savedobj.ser");
+         ObjectOutputStream obj = new ObjectOutputStream(fileOut);
+         obj.writeObject(tsService);
+         obj.close();
+         fileOut.close();
+         System.out.printf("Serialized data is saved in savedobj.ser");
+      }catch(IOException i) {
+         i.printStackTrace();
+      }
     }
     
     private void loadData() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        tsService = null;
+            try {
+               FileInputStream fileIn = new FileInputStream("savedobj.ser");
+               ObjectInputStream obj = new ObjectInputStream(fileIn);
+               tsService = (ToyStopService) obj.readObject();
+               obj.close();
+               fileIn.close();
+            }catch(IOException i) {
+               i.printStackTrace();
+               return;
+            }catch(ClassNotFoundException c) {
+               System.out.println("tsService class not found");
+               c.printStackTrace();
+               return;
+            }
     }
 
     private void showMenu() {
